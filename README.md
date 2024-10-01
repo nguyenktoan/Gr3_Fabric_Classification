@@ -1,4 +1,4 @@
-# Gr3_Fabric_Classification
+# Machine Learning/Data Science Applications in Fabric Classification
 A deep learning-based system for accurate classification of fabric types (Cotton, Denim, Nylon, Polyester, Silk,...) directly at the source, optimizing production efficiency and quality control
 
 ### Project Team
