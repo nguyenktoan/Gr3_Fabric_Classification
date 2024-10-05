@@ -1,0 +1,1 @@
+ /Users/huatuanvi/myios/.dart_tool/flutter_build/bcd37e03ae4af84cc47864025ae48688/native_assets.yaml: 
