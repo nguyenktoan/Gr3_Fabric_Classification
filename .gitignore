@@ -1,0 +1,16 @@
+# Ignore virtual environment and node_modules
+myenv/
+node_modules/
+
+# Ignore large binary files
+*.dylib
+*.so
+*.h5
+# Ignore macOS system files
+.DS_Store
+backend/.DS_Store
+myios/.DS_Store
+myios/build/.DS_Store
+
+
+
