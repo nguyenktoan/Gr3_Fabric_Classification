@@ -1,0 +1,17 @@
+{
+  "name": "my-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs-node": "^4.21.0",
+    "axios": "^1.7.7",
+    "express": "^4.21.0",
+    "multer": "^1.4.3"
+  },
+  "author": "",
+  "license": "ISC"
+}
