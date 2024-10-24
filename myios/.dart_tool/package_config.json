@@ -45,13 +45,13 @@
     },
     {
       "name": "file_selector_linux",
-      "rootUri": "file:///Users/huatuanvi/.pub-cache/hosted/pub.dev/file_selector_linux-0.9.2+1",
+      "rootUri": "file:///Users/huatuanvi/.pub-cache/hosted/pub.dev/file_selector_linux-0.9.3",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.3"
     },
     {
       "name": "file_selector_macos",
-      "rootUri": "file:///Users/huatuanvi/.pub-cache/hosted/pub.dev/file_selector_macos-0.9.4+1",
+      "rootUri": "file:///Users/huatuanvi/.pub-cache/hosted/pub.dev/file_selector_macos-0.9.4+2",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -63,9 +63,9 @@
     },
     {
       "name": "file_selector_windows",
-      "rootUri": "file:///Users/huatuanvi/.pub-cache/hosted/pub.dev/file_selector_windows-0.9.3+2",
+      "rootUri": "file:///Users/huatuanvi/.pub-cache/hosted/pub.dev/file_selector_windows-0.9.3+3",
       "packageUri": "lib/",
-      "languageVersion": "3.2"
+      "languageVersion": "3.3"
     },
     {
       "name": "flutter",
@@ -87,9 +87,9 @@
     },
     {
       "name": "flutter_plugin_android_lifecycle",
-      "rootUri": "file:///Users/huatuanvi/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.22",
+      "rootUri": "file:///Users/huatuanvi/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.23",
       "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.5"
     },
     {
       "name": "flutter_test",
@@ -123,7 +123,7 @@
     },
     {
       "name": "image_picker_android",
-      "rootUri": "file:///Users/huatuanvi/.pub-cache/hosted/pub.dev/image_picker_android-0.8.12+13",
+      "rootUri": "file:///Users/huatuanvi/.pub-cache/hosted/pub.dev/image_picker_android-0.8.12+16",
       "packageUri": "lib/",
       "languageVersion": "3.5"
     },
@@ -135,7 +135,7 @@
     },
     {
       "name": "image_picker_ios",
-      "rootUri": "file:///Users/huatuanvi/.pub-cache/hosted/pub.dev/image_picker_ios-0.8.12",
+      "rootUri": "file:///Users/huatuanvi/.pub-cache/hosted/pub.dev/image_picker_ios-0.8.12+1",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -162,6 +162,12 @@
       "rootUri": "file:///Users/huatuanvi/.pub-cache/hosted/pub.dev/image_picker_windows-0.2.1+1",
       "packageUri": "lib/",
       "languageVersion": "2.19"
+    },
+    {
+      "name": "intl",
+      "rootUri": "file:///Users/huatuanvi/.pub-cache/hosted/pub.dev/intl-0.17.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "leak_tracker",
@@ -267,9 +273,9 @@
     },
     {
       "name": "typed_data",
-      "rootUri": "file:///Users/huatuanvi/.pub-cache/hosted/pub.dev/typed_data-1.3.2",
+      "rootUri": "file:///Users/huatuanvi/.pub-cache/hosted/pub.dev/typed_data-1.4.0",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.5"
     },
     {
       "name": "vector_math",
@@ -296,7 +302,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2024-09-27T15:29:52.138880Z",
+  "generated": "2024-10-23T09:15:33.591494Z",
   "generator": "pub",
   "generatorVersion": "3.5.3",
   "flutterRoot": "file:///Users/huatuanvi/development/flutter",

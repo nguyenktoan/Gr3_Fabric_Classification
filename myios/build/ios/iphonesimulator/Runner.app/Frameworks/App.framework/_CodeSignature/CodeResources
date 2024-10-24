@@ -10,11 +10,11 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		21tVqbIV90TbglF4ZJhNBz8uj4w=
+		fXR3zNwpgj6S+xU4gSrRZMR5XKY=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		vyGp6PvFo4RvsFtPoIWeCReyIC8=
+		bDX+0Xe3/a0vRu4MaJb8wCe2byY=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -22,7 +22,27 @@
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		HY5ZRvpBnsHrwDo0L4njLN5NHIA=
+		9/bWkrv4YyTWfHNkYHi+8FMUxCg=
+		</data>
+		<key>flutter_assets/assets/deleted.gif</key>
+		<data>
+		kTNEYM1zCCkP3EqzbeB4WYfWPkI=
+		</data>
+		<key>flutter_assets/assets/loading.gif</key>
+		<data>
+		uVSX1orrES48nSFBbNlHBLlGfSE=
+		</data>
+		<key>flutter_assets/assets/logo.png</key>
+		<data>
+		uqNObchoqDyYTbGey5BE4qHcKis=
+		</data>
+		<key>flutter_assets/assets/robot.gif</key>
+		<data>
+		xaiCVT5FkaeCucMfKdWkOdIKdGQ=
+		</data>
+		<key>flutter_assets/assets/robot2.gif</key>
+		<data>
+		sK+9amKEshufE9Mm+KbzNXKK9DI=
 		</data>
 		<key>flutter_assets/fonts/MaterialIcons-Regular.otf</key>
 		<data>
@@ -34,7 +54,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		1vjL57GOXtzBRmY08Nq/VnrCNAw=
+		qH5FFP9YHD7jv+8cqVRB1DWQRq4=
 		</data>
 		<key>flutter_assets/shaders/ink_sparkle.frag</key>
 		<data>
@@ -51,14 +71,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			9WbMb8zGVzZcAZeszzp9b4D4Ugn/Zm/3dPTcvFJKqEI=
+			V9zTyGe9J8Gp1DCkQZf27PQZikSiM8E8pSkPfqJodao=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RBNvo1WzZ4oRRq0W9+hknpT7T8If536DEMBg9hyq/4o=
+			ZEYpfq0279w3P95spNjiStjnzy+ZJUkU+bnwhZHCE+c=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -72,7 +92,42 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			eHB76pZvc9KA1UHPyToQScKG1BmryRNPA22NUUgyxpU=
+			AUzrSpBdbh5cUInUe0PvLlDR038HHy5dHUTSVfiiKVE=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/deleted.gif</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			JEzeTfI1gPMRFr4WTC7I9Je2lQJaMi3GYega/iFbtV8=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/loading.gif</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			rpg538fpa+2QMuTfpm1jnCT0TeeztcrvQZ6iRZ7d3n8=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/logo.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			5J6HNCsQM8oN0TzVzyDylPdILrm2m3p8rJlJRHmGqBo=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/robot.gif</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			F1LYD9C5zJq7Kt1s6FO4VW1WSrstLLnSYvkbQjkTa+Q=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/robot2.gif</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			1ZxozhbRiNDTKfV6qhMx2+mMD4Kn46eKZPOXyCXNhAk=
 			</data>
 		</dict>
 		<key>flutter_assets/fonts/MaterialIcons-Regular.otf</key>
@@ -93,7 +148,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			/cJP5AVOXypDpW1o+e02vdWfeUBlE0U+0aNwtaNSiJU=
+			yI+EBZ+hJ2z2HlRZz6N3zmEFMweBNHqqvGkfxCgXyV0=
 			</data>
 		</dict>
 		<key>flutter_assets/shaders/ink_sparkle.frag</key>
