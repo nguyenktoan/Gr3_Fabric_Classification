@@ -1,63 +1,108 @@
 import os
+import joblib
+import numpy as np
+from keras.preprocessing import image
+from keras.applications.resnet50 import ResNet50, preprocess_input
+from sklearn.preprocessing import Normalizer
+import time
+from keras.models import load_model
+import sys
+
 # Tắt tất cả các log của TensorFlow (bao gồm cả tiến trình training và dự đoán)
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
-import sys
-import tensorflow as tf
-from tensorflow.keras.models import load_model
-import numpy as np
-from PIL import Image
+class FabricClassificationPipeline:
+    def __init__(self, mlp_model_path, resnet_model_path):
+        # Đường dẫn đến mô hình
+        self.mlp_model_path = mlp_model_path
 
-# Load model đã huấn luyện
-model = load_model('base_line_resnet50.h5', compile=False)
+        # Tải mô hình ResNet50 từ đường dẫn đã cho
+        self.resnet_model = load_model(resnet_model_path, compile=False)
+        print("ResNet50 model loaded successfully from", resnet_model_path)
 
-# Danh sách ánh xạ từ class_idx tới loại vải (theo yêu cầu mới)
-fabric_classes = ['Cotton', 'Denim', 'Nylon', 'Polyester', 'Silk', 'Wool']
+        # Tải mô hình MLP đã huấn luyện
+        self.mlp_model = joblib.load(self.mlp_model_path)
+        print("MLP model loaded successfully.")
 
-def classify_image(image_path):
-    try:
-        # Mở ảnh và kiểm tra lỗi nếu không mở được
-        try:
-            img = Image.open(image_path).convert('RGB')
-        except Exception:
-            return None, None
-        
-        img = img.resize((224, 224))  # Điều chỉnh kích thước ảnh cho phù hợp với mô hình
+        # Khởi tạo normalizer
+        self.normalizer = Normalizer()
 
-        # Chuẩn hóa ảnh
-        img_array = np.array(img) / 255.0
+    def load_and_preprocess_image(self, image_path):
+        # Kiểm tra xem file có tồn tại không
+        if not os.path.exists(image_path):
+            print(f"File not found: {image_path}")
+            raise FileNotFoundError(f"File not found: {image_path}")
+
+        # Tải và xử lý ảnh
+        img = image.load_img(image_path, target_size=(224, 224))
+        img_array = image.img_to_array(img)
         img_array = np.expand_dims(img_array, axis=0)
+        img_array = preprocess_input(img_array)
+        return img_array
 
-        # Dự đoán loại vải
-        predictions = model.predict(img_array, verbose=0)  # Tắt thông báo progress
+    def extract_features(self, img_array):
+        # Trích xuất đặc trưng từ ResNet50
+        features = self.resnet_model.predict(img_array)
+        return features.reshape(1, -1)
 
-        # Kiểm tra xem dự đoán có hợp lệ không
-        if predictions is None or len(predictions) == 0:
+    def normalize_features(self, features):
+        # Chuẩn hóa đặc trưng
+        return self.normalizer.fit_transform(features)
+
+    def predict_with_mlp(self, normalized_features):
+        # Dự đoán với MLP model
+        try:
+            predictions = self.mlp_model.predict(normalized_features)
+            confidence_scores = self.mlp_model.predict_proba(normalized_features)
+
+            label_mapping = {0: 'Cotton', 1: 'Denim', 2: 'Nylon', 3: 'Polyester', 4: 'Silk', 5: 'Wool'}
+            predicted_label = label_mapping.get(predictions[0], "Unknown")
+            predicted_confidence = confidence_scores[0][predictions[0]] * 100
+
+            if predicted_confidence < 50:
+                predicted_label, predicted_confidence = "Unclassified", 0.0
+
+            # In kết quả theo định dạng yêu cầu
+            print(f"{predicted_label},{predicted_confidence:.2f}")
+            return predicted_label, predicted_confidence
+        except Exception as e:
+            print(f"Prediction error: {e}")
             return None, None
-        
-        class_idx = np.argmax(predictions)
-        confidence = predictions[0][class_idx]
 
-        # Kiểm tra confidence, nếu quá thấp thì trả về không nhận diện được
-        if confidence < 0.5:  # Ngưỡng confidence là 50%
-            return None, None
+    def run_pipeline(self, image_path):
+        # Pipeline chính để xử lý và dự đoán ảnh
+        start_time = time.time()
 
-        # Trả về loại vải và độ tin cậy
-        return fabric_classes[class_idx], confidence
+        # 1. Xử lý ảnh
+        img_array = self.load_and_preprocess_image(image_path)
 
-    except Exception:
-        return None, None
+        # 2. Trích xuất đặc trưng
+        features = self.extract_features(img_array)
 
-if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        sys.exit(1)  # Không in ra thông báo lỗi, chỉ thoát nếu không có đường dẫn ảnh
+        # 3. Chuẩn hóa đặc trưng
+        normalized_features = self.normalize_features(features)
 
-    image_path = sys.argv[1]  # Đường dẫn ảnh được truyền từ Node.js
-    fabric_type, confidence = classify_image(image_path)  # Lưu kết quả vào biến
+        # 4. Dự đoán nhãn
+        predicted_label, predicted_confidence = self.predict_with_mlp(normalized_features)
 
-    # Nếu không phân loại được, không trả về thông báo nào
-    if fabric_type is None:
-        sys.exit(1)  # Thoát mà không làm gì thêm
 
-    # Nếu có kết quả, in ra kết quả
-    print(f'{fabric_type},{confidence}')  # Chỉ in ra kết quả cuối cùng
+        return predicted_label, predicted_confidence
+
+# Đường dẫn đến mô hình MLP và ResNet50 đã lưu
+mlp_model_path = 'MLP_model_full_train.pkl'  # Đường dẫn tới mô hình MLP
+resnet_model_path = 'resnet50_feature_extractor.h5'  # Đường dẫn tới mô hình ResNet50
+
+# Tạo đối tượng pipeline
+pipeline = FabricClassificationPipeline(mlp_model_path, resnet_model_path)
+
+# Lấy đường dẫn ảnh từ tham số command line
+image_path = sys.argv[1]
+
+# Chạy pipeline với ảnh đã tải lên
+predicted_label, predicted_confidence = pipeline.run_pipeline(image_path)
+
+# In kết quả theo định dạng yêu cầu
+if predicted_label is not None and predicted_confidence is not None:
+    print(f"{predicted_label},{predicted_confidence:.2f}")
+else:
+    print("Error during prediction.")

@@ -113,7 +113,7 @@ class _SecondPageState extends State<SecondPage> with SingleTickerProviderStateM
       MaterialPageRoute(builder: (context) => LoadingPage()), // Chuyển tới trang loading
     );
 
-    String url = 'https://d6b5-2401-d800-bf1-3fe7-8d92-e1f4-617-5d5a/classifyImage'; // Địa chỉ API Ngrok
+    String url = 'http://localhost:3000/classifyImage'; // Địa chỉ API Ngrok
 
     var request = http.MultipartRequest('POST', Uri.parse(url));
     request.files.add(await http.MultipartFile.fromPath('image', _currentImagePath!));

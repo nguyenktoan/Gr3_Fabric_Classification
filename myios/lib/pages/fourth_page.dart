@@ -30,7 +30,7 @@ class _FourthPageState extends State<FourthPage> {
 
   // Function to fetch history data from server
   Future<void> _fetchHistory() async {
-    String url = 'https://d6b5-2401-d800-bf1-3fe7-8d92-e1f4-617-5d5a/getFabricHistory'; // API address to fetch history from Ngrok
+    String url = 'http://localhost:3000/getFabricHistory'; // API address to fetch history from Ngrok
 
     try {
       final response = await http.get(Uri.parse(url));
@@ -109,7 +109,7 @@ class _FourthPageState extends State<FourthPage> {
 
     // If the undo button was not pressed, delete the item permanently
     if (_isUndoVisible) {
-      String url = 'https://d6b5-2401-d800-bf1-3fe7-8d92-e1f4-617-5d5a/deleteFabricHistory/$id'; // API address to delete history from Ngrok
+      String url = 'http://localhost:3000/deleteFabricHistory/$id'; // API address to delete history from Ngrok
       await http.delete(Uri.parse(url));
 
       // Remove item from frontend

@@ -2,7 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const { spawn } = require('child_process');
 const path = require('path');
-const { Pool } = require('pg');  // Thêm thư viện PostgreSQL
+const { Pool } = require('pg'); // Thêm thư viện PostgreSQL
 const app = express();
 const port = 3000;
 
@@ -12,7 +12,7 @@ const pool = new Pool({
     host: 'aws-0-ap-southeast-1.pooler.supabase.com', // Hoặc địa chỉ của máy chủ PostgreSQL của bạn
     database: 'postgres', // Tên cơ sở dữ liệu của bạn
     password: 'HuaTuanVi168@', // Mật khẩu của bạn
-    port: 5432, // Cổng của PostgreSQL, mặc định là 5432
+    port: 6543, // Cổng của PostgreSQL, mặc định là 5432
 });
 
 // Ánh xạ từ tên loại vải sang ID
@@ -46,8 +46,7 @@ const upload = multer({ storage: storage });
 app.use('/uploads', express.static('uploads'));
 
 // **URL công khai từ Ngrok**
-// **URL công khai từ Ngrok**
-const ngrokBaseUrl = 'https://d6b5-2401-d800-bf1-3fe7-8d92-e1f4-617-5d5a'; // Thay bằng URL công khai từ Ngrok
+const ngrokBaseUrl = 'http://localhost:3000'; // Thay bằng URL công khai từ Ngrok
 
 // **API Upload ảnh**
 app.post('/uploadImage', upload.single('image'), (req, res) => {
@@ -61,7 +60,6 @@ app.post('/uploadImage', upload.single('image'), (req, res) => {
     const imageUrl = `${ngrokBaseUrl}/uploads/${file.filename}`;
     res.status(200).json({ message: 'Image uploaded successfully', imageUrl });
 });
-
 
 // **API Phân loại ảnh bằng Python**
 app.post('/classifyImage', upload.single('image'), async (req, res) => {
@@ -139,7 +137,6 @@ app.post('/classifyImage', upload.single('image'), async (req, res) => {
         return res.status(500).json({ error: 'Error during classification', details: data.toString() });
     });
 });
-
 
 // **API Lấy dữ liệu lịch sử phân loại vải**
 app.get('/getFabricHistory', async (req, res) => {
