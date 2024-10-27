@@ -1,195 +1,182 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'dart:io'; // For using the image file
-import 'fourth_page.dart'; // Import FourthPage
+import 'package:intl/intl.dart';
+import 'dart:convert';
+import '../main.dart';
+import 'fourth_page.dart';
+import 'upload_photo_page.dart'; // Đảm bảo import UploadPhotoPage
 
-class ThirdPage extends StatelessWidget {
+class ThirdPage extends StatefulWidget {
   final String imagePath;
-  final List<Map<String, String>> classifiedResults; // Danh sách các kết quả phân loại
+  final Map<String, dynamic> result;
 
-  ThirdPage({required this.imagePath, required this.classifiedResults});
+  ThirdPage({required this.imagePath, required this.result});
+
+  @override
+  _ThirdPageState createState() => _ThirdPageState();
+}
+
+class _ThirdPageState extends State<ThirdPage> {
+  int _selectedIndex = 0;
+
+  // Hàm để chuyển trang
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    if (index == 0) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainPage()), // Trở về UploadPhotoPage
+      );
+    } else if (index == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => FourthPage(results: [])),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    var result = widget.result;
+    var timestamp = result['timestamp'];
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        title: Text('Classified Result'),
+        backgroundColor: Color(0xFF79B142),
         elevation: 0,
-        automaticallyImplyLeading: false, // Ngăn không tự động thêm nút mũi tên
+        automaticallyImplyLeading: false,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start, // Căn lề trái
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Display the uploaded image with rounded corners
               ClipRRect(
-                borderRadius: BorderRadius.circular(15), // Rounded corners
+                borderRadius: BorderRadius.circular(15),
                 child: Image.file(
-                  File(imagePath),
-                  width: double.infinity, // Horizontal full width
-                  height: 200, // Set a standard height
-                  fit: BoxFit.cover, // Ensure the image covers the space
+                  File(widget.imagePath),
+                  width: double.infinity,
+                  height: 200,
+                  fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(height: 20),
-
-              // Result title - căn giữa
+              SizedBox(height: 30),
               Center(
                 child: Text(
                   'RESULT',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.brown,
-                  ),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
-              SizedBox(height: 20),
-
-              // Fabric Type
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start, // Căn trái
-                children: [
-                  Text(
-                    'Fabric Type:',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.brown,
-                    ),
-                  ),
-                  SizedBox(width: 10), // Khoảng cách giữa tiêu đề và giá trị
-                  Text(
-                    'Cotton',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.normal, // Không in đậm
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-
-              // Recycling Recommendations
+              SizedBox(height: 10),
               Text(
-                'Recycling Recommendations:',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.brown,
-                ),
+                'Type: ${result['name_fabric'] ?? 'No type available'}',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 5),
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0), // Thụt vào một chút
-                child: Text(
-                  '• Recycling Option: Can be recycled into new fabric or other products.\n'
-                      '• Pre-Sorting Needed: No pre-sorting required; suitable for general textile recycling programs.',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-              SizedBox(height: 20),
-
-              // Care Instructions
+              SizedBox(height: 10),
               Text(
-                'Care Instructions:',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.brown,
-                ),
+                'Confidence: ${(result['confidence'] as double?)?.toStringAsFixed(2) ?? 'No confidence available'}%',
+                style: TextStyle(fontSize: 18),
               ),
-              SizedBox(height: 5),
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0), // Thụt vào một chút
-                child: Text(
-                  '• Wash in cold water to preserve fabric integrity.\n'
-                      '• Avoid high-temperature drying to prevent shrinkage.',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-              SizedBox(height: 20),
-
-              // Additional Notes
+              SizedBox(height: 10),
               Text(
-                'Additional Notes:',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.brown,
-                ),
+                'Classified at: ${_formatTimestamp(timestamp)}',
+                style: TextStyle(fontSize: 18),
               ),
-              SizedBox(height: 5),
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0), // Thụt vào một chút
-                child: Text(
-                  '• Cotton is a biodegradable fabric, making it a good choice for sustainable fashion.\n'
-                      '• Consider donating or repurposing worn cotton items before recycling.',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-              SizedBox(height: 20),
-
-              // Retake and View History buttons
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              SizedBox(height: 10),
+              if (result['description'] != null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        // Navigate back to the first page and clear all previous pages
-                        Navigator.popUntil(context, (route) => route.isFirst);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey.shade600,
-                        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15), // Kích thước đồng bộ
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30), // Bo góc
-                        ),
-                      ),
-                      child: Text(
-                        'Retake',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18, // Đồng bộ với kích thước chữ của nút classify
-                        ),
-                      ),
+                    Text(
+                      'Description:',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => FourthPage(
-                              results: classifiedResults,
-                            ),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey.shade600,
-                        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15), // Kích thước đồng bộ
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30), // Bo góc
-                        ),
-                      ),
-                      child: Text(
-                        'View History',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18, // Đồng bộ với kích thước chữ của nút classify
-                        ),
-                      ),
+                    SizedBox(height: 5),
+                    Text(
+                      '${result['description']}',
+                      style: TextStyle(fontSize: 16),
                     ),
                   ],
+                ),
+              SizedBox(height: 10),
+              if (result['careInstructions'] != null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Care Instructions:',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      '${result['careInstructions']}',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ],
+                ),
+              SizedBox(height: 20),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainPage()), // Quay về UploadPhotoPage
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF79B142),
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                  ),
+                  child: Text(
+                    'RETAKE',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history),
+            label: 'History',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.blue,
+        onTap: _onItemTapped,
+      ),
     );
+  }
+
+  String _formatTimestamp(String? timestamp) {
+    if (timestamp != null && timestamp.isNotEmpty) {
+      try {
+        String cleanedTimestamp = timestamp.replaceAll('Z', '');
+        final DateTime dateTime = DateTime.parse(cleanedTimestamp).toLocal();
+        return DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
+      } catch (e) {
+        print('Error parsing date: $e');
+        return 'Ngày không hợp lệ';
+      }
+    }
+    return 'Không có thời gian';
   }
 }
