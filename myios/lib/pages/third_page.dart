@@ -78,10 +78,6 @@ class _ThirdPageState extends State<ThirdPage> {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
-              Text(
-                'Confidence: ${(result['confidence'] as double?)?.toStringAsFixed(2) ?? 'No confidence available'}%',
-                style: TextStyle(fontSize: 18),
-              ),
               SizedBox(height: 10),
               Text(
                 'Classified at: ${_formatTimestamp(timestamp)}',
@@ -164,6 +160,14 @@ class _ThirdPageState extends State<ThirdPage> {
         onTap: _onItemTapped,
       ),
     );
+  }
+
+  // Hàm format lại confidence thành phần trăm
+  String _formatConfidence(dynamic confidence) {
+    if (confidence != null && confidence is double) {
+      return '${(confidence * 100).toStringAsFixed(2)}%';  // Nhân với 100 để ra phần trăm và định dạng 2 số sau dấu phẩy
+    }
+    return 'No confidence available';
   }
 
   String _formatTimestamp(String? timestamp) {
