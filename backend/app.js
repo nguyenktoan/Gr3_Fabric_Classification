@@ -169,7 +169,35 @@ app.post('/classifyImage', upload.single('image'), async (req, res) => {
         console.log(`Python process exited with code ${code}`);
     });
 });
+// **API Lấy dữ liệu lịch sử phân loại vải**
+app.get('/getFabricHistory', async (req, res) => {
+    console.log('API /getFabricHistory được gọi');  // Log khi API được gọi
+    try {
+        const query = 'SELECT * FROM ClassificationResults';
+        const result = await pool.query(query);
+        console.log(result.rows);  // Log kết quả từ database
 
+        res.status(200).json(result.rows);
+    } catch (err) {
+        console.error('Lỗi khi lấy lịch sử phân loại:', err.message);
+        res.status(500).json({ error: 'Lỗi khi lấy lịch sử phân loại', details: err.message });
+    }
+});
+
+
+// **API Xóa lịch sử phân loại vải**
+app.delete('/deleteFabricHistory/:id', async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const query = 'DELETE FROM ClassificationResults WHERE id = $1';
+        await pool.query(query, [id]);
+
+        res.status(200).send({ message: 'Xóa thành công' });
+    } catch (error) {
+        res.status(500).send({ message: 'Xóa thất bại', error });
+    }
+});
 // Chạy server
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
