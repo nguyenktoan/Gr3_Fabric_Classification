@@ -171,11 +171,15 @@ app.post('/classifyImage', upload.single('image'), async (req, res) => {
 });
 // **API Lấy dữ liệu lịch sử phân loại vải**
 app.get('/getFabricHistory', async (req, res) => {
-    console.log('API /getFabricHistory được gọi');  // Log khi API được gọi
+    console.log('API /getFabricHistory được gọi');
     try {
-        const query = 'SELECT * FROM ClassificationResults';
+        const query = `
+            SELECT cr.*, ft.description, ft.care_instructions 
+            FROM ClassificationResults cr
+            JOIN FabricTypes ft ON cr.name_fabric = ft.fabric_name
+        `;
         const result = await pool.query(query);
-        console.log(result.rows);  // Log kết quả từ database
+        console.log(result.rows); // Log kết quả từ database
 
         res.status(200).json(result.rows);
     } catch (err) {
@@ -183,7 +187,6 @@ app.get('/getFabricHistory', async (req, res) => {
         res.status(500).json({ error: 'Lỗi khi lấy lịch sử phân loại', details: err.message });
     }
 });
-
 
 // **API Xóa lịch sử phân loại vải**
 app.delete('/deleteFabricHistory/:id', async (req, res) => {

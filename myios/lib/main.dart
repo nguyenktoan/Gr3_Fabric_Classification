@@ -18,12 +18,22 @@ class MyApp extends StatelessWidget {
 }
 
 class MainPage extends StatefulWidget {
+  final int initialIndex;
+
+  MainPage({this.initialIndex = 0});
+
   @override
   _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-  int _currentIndex = 0; // Để theo dõi trang hiện tại
+  late int _currentIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialIndex; // Nhận giá trị initialIndex để hiển thị trang mong muốn
+  }
 
   final List<Widget> _pages = [
     UploadPhotoPage(), // Trang tải ảnh
@@ -34,18 +44,12 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       _currentIndex = index; // Cập nhật chỉ số của trang hiện tại
     });
-
-    // Nếu nhấn vào UploadPhotoPage, có thể reset trạng thái nếu cần
-    if (index == 0) {
-      // Có thể thêm logic để reset hoặc làm mới UploadPhotoPage nếu cần
-      // Nếu UploadPhotoPage có stateful logic, có thể muốn thêm phương thức để reset.
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_currentIndex], // Hiển thị trang dựa trên chỉ số
+      body: _pages[_currentIndex], // Hiển thị trang hiện tại dựa trên chỉ số
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -58,9 +62,11 @@ class _MainPageState extends State<MainPage> {
           ),
         ],
         currentIndex: _currentIndex,
-        selectedItemColor: Colors.blue,
-        onTap: _onItemTapped, // Hàm khi nhấn vào item
+        selectedItemColor: _currentIndex == 1 ? Colors.white :Colors.blue,
+        backgroundColor: _currentIndex == 1 ? Color(0xFF79B142) : Colors.white, // Nền xanh lá khi ở trang "History"
+        onTap: _onItemTapped, // Khi nhấn vào một mục trong thanh điều hướng
       ),
     );
   }
 }
+

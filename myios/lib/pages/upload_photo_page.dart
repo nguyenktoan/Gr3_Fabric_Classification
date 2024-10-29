@@ -158,7 +158,7 @@ class _UploadPhotoPageState extends State<UploadPhotoPage> with SingleTickerProv
                   child: Icon(
                     Icons.cloud_upload,
                     size: 200, // Thay đổi kích thước icon nếu cần
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                 ),
                 SizedBox(height: 20),
