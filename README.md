@@ -39,3 +39,9 @@ The fashion industry generates up to 92 million tons of textile waste annually, 
 
 * Enhanced consumer awareness about fabric types and recycling
 * Potential job creation in the recycling sector
+
+*** [Watch Fabric Classification Demo]([https://drive.google.com/file/d/example_video_id/view?usp=sharing](https://drive.google.com/drive/folders/1ib-H-Q07xM_GthyepoTb4QBn8dPfHzCI))
+
+
+
+
