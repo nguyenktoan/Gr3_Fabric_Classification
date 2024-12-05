@@ -1,4 +1,4 @@
-Report and AI model training: https://drive.google.com/drive/u/1/folders/1-gna-lm5ZVDmEhOJKFo0KTKddGytsd5M
+
 
 # Machine Learning/Data Science Applications in Fabric Classification
 A deep learning-based system for accurate classification of fabric types (Cotton, Denim, Nylon, Polyester, Silk,...) directly at the source, optimizing production efficiency and quality control
